@@ -15,7 +15,7 @@ const User = require("./models/user")
 
 // Port no
 require('dotenv').config()
-const port = process.env.PORT
+const port = process.env.PORT || 5000
 
 // Database and Passport configuration
 require("./config/database")
@@ -34,7 +34,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.PRIV_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge:6000000 }
@@ -46,8 +46,6 @@ console.log("Passport configured");
 
 // Socket ----------------------------
 
-
-
-module.exports = server.listen(process.env.PORT, ()=>{
+module.exports = server.listen(port, ()=>{
     console.log("Server started");
 })
